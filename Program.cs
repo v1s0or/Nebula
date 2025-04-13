@@ -24,7 +24,10 @@ namespace DiscordBot
             };
 
             _client = new DiscordSocketClient(config); // Pass the config to the client
-            _client.Log += Log;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Atempting to Login...");
+            Console.ResetColor();
             _client.Ready += OnReady;
         }
 
@@ -36,7 +39,10 @@ namespace DiscordBot
 
         private async Task OnReady()
         {
+            int n = 2;
             Console.Title = "Lotus - Nebula (Online)";
+            Console.Beep();
+            Console.Beep();
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("[+] Bot is online");
@@ -176,23 +182,33 @@ namespace DiscordBot
 
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static async Task Main()
         {
-            string filePath = "bannerN.txt";
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("\nMade by v1s0or, Kick and Ban Service For Lotus.\n");
+            Console.ResetColor();
 
-            try
-            {
-                string content = File.ReadAllText(filePath);
-                Console.WriteLine(content);
-            }
-            catch (FileNotFoundException)
-            {
-                Console.Clear();
-            }
-
-            Console.Title = "Lotus - Nebula";
+            Console.Title = "Lotus / Nebula";
             Console.WriteLine("Enter your bot token: ");
             string botToken = Console.ReadLine();
+
+            if (botToken == string.Empty) {
+                Console.Clear();
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Enter a Token!");
+                Console.ResetColor();
+                Console.ReadLine();
+                Console.Clear();
+                await Main();
+            }
+
+            if (botToken == "null") {
+                Console.WriteLine("really.");
+                Console.ReadKey();
+                Console.Clear();
+                await Main();
+            }
 
             var botCommands = new BotCommands(botToken);
             await botCommands.StartBotAsync();
